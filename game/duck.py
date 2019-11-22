@@ -1,12 +1,11 @@
-import os, sys, random
-import pygame
-import states
-from registry import adjpos, adjrect, adjwidth, adjheight
+import random
+from game.registry import adjpos, adjheight
 
 FRAME_SIZE = adjpos (81, 75)
 XOFFSET, YOFFSET = adjpos (250, 225)
 FLYOFF_YOFFSET = YOFFSET + adjheight (155)
 FALL_YOFFSET = YOFFSET + adjheight (235)
+
 
 class Duck(object):
 

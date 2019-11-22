@@ -1,40 +1,125 @@
-import os, time
+import os
+import time
 import pygame
-import sounds
-from registry import adjpos, adjrect, adjwidth, adjheight
-from gun import Gun
-from duck import Duck
+import json
+from game.registry import adjpos, adjrect, adjwidth, adjheight
+from game.gun import Gun
+from game.duck import Duck
 
-DOG_POSITION = adjpos (250, 350)
-DOG_FRAME = adjpos (122, 110)
-DOG_REPORT_POSITION = adjpos (450, 325)
-DOG_LAUGH_RECT = adjrect (385, 120, 80, 85)
-DOG_ONE_DUCK_RECT = adjrect (650, 0, 100, 100)
-DOG_TWO_DUCKS_RECT = adjrect (630, 115, 120, 100)
-HIT_POSITION = adjpos (245, 440)
-HIT_RECT = adjrect (0, 0, 287, 43)
-HIT_DUCK_POSITION = adjpos (329, 445)
-HIT_DUCK_WHITE_RECT = adjrect (218, 44, 18, 15)
-HIT_DUCK_RED_RECT = adjrect (200, 44, 18, 15)
-SCORE_POSITION = adjpos (620, 440)
-SCORE_RECT = adjrect (69, 43, 130, 43)
+with open('./game/data.json') as json_file:
+    data = json.load(json_file)
+
+GAME_SPECS = data['game_specs']
+POSITIONS = GAME_SPECS['positions']
+RECTANGLES = GAME_SPECS['rectangles']
+COLORS = GAME_SPECS['colors']
+
+# Load the Positions in from data.json
+DOG_POSITION = adjpos(POSITIONS['DOG_POSITION'].get('x_val'),
+                      POSITIONS['DOG_POSITION'].get('y_val'))
+
+DOG_FRAME = adjpos(POSITIONS['DOG_FRAME'].get('x_val'),
+                   POSITIONS['DOG_FRAME'].get('y_val'))
+
+DOG_REPORT_POSITION = adjpos(POSITIONS['DOG_REPORT_POSITION'].get('x_val'),
+                             POSITIONS['DOG_REPORT_POSITION'].get('y_val'))
+
+HIT_POSITION = adjpos(POSITIONS['HIT_POSITION'].get('x_val'),
+                      POSITIONS['HIT_POSITION'].get('y_val'))
+
+HIT_DUCK_POSITION = adjpos(POSITIONS['HIT_DUCK_POSITION'].get('x_val'),
+                           POSITIONS['HIT_DUCK_POSITION'].get('y_val'))
+
+SCORE_POSITION = adjpos(POSITIONS['SCORE_POSITION'].get('x_val'),
+                        POSITIONS['SCORE_POSITION'].get('y_val'))
+
+FONT_STARTING_POSITION = adjpos(POSITIONS['FONT_STARTING_POSITION'].get('x_val'),
+                                POSITIONS['FONT_STARTING_POSITION'].get('y_val'))
+
+ROUND_POSITION = adjpos(POSITIONS['ROUND_POSITION'].get('x_val'),
+                        POSITIONS['ROUND_POSITION'].get('y_val'))
+
+SHOT_BG_POSITION = adjpos(POSITIONS['SHOT_BG_POSITION'].get('x_val'),
+                          POSITIONS['SHOT_BG_POSITION'].get('y_val'))
+
+SHOT_POSITION = adjpos(POSITIONS['SHOT_POSITION'].get('x_val'),
+                       POSITIONS['SHOT_POSITION'].get('y_val'))
+
+NOTICE_POSITION = adjpos(POSITIONS['NOTICE_POSITION'].get('x_val'),
+                         POSITIONS['NOTICE_POSITION'].get('y_val'))
+
+# Load the Rectangles in from data.json
+DOG_LAUGH_RECT = adjrect(RECTANGLES['DOG_LAUGH_RECT'].get('x_val'),
+                         RECTANGLES['DOG_LAUGH_RECT'].get('y_val'),
+                         RECTANGLES['DOG_LAUGH_RECT'].get('width'),
+                         RECTANGLES['DOG_LAUGH_RECT'].get('height'))
+
+DOG_ONE_DUCK_RECT = adjrect(RECTANGLES['DOG_ONE_DUCK_RECT'].get('x_val'),
+                            RECTANGLES['DOG_ONE_DUCK_RECT'].get('y_val'),
+                            RECTANGLES['DOG_ONE_DUCK_RECT'].get('width'),
+                            RECTANGLES['DOG_ONE_DUCK_RECT'].get('height'))
+
+DOG_TWO_DUCKS_RECT = adjrect(RECTANGLES['DOG_TWO_DUCKS_RECT'].get('x_val'),
+                             RECTANGLES['DOG_TWO_DUCKS_RECT'].get('y_val'),
+                             RECTANGLES['DOG_TWO_DUCKS_RECT'].get('width'),
+                             RECTANGLES['DOG_TWO_DUCKS_RECT'].get('height'))
+
+HIT_DUCK_WHITE_RECT = adjrect(RECTANGLES['HIT_DUCK_WHITE_RECT'].get('x_val'),
+                              RECTANGLES['HIT_DUCK_WHITE_RECT'].get('y_val'),
+                              RECTANGLES['HIT_DUCK_WHITE_RECT'].get('width'),
+                              RECTANGLES['HIT_DUCK_WHITE_RECT'].get('height'))
+
+HIT_DUCK_RED_RECT = adjrect(RECTANGLES['HIT_DUCK_RED_RECT'].get('x_val'),
+                            RECTANGLES['HIT_DUCK_RED_RECT'].get('y_val'),
+                            RECTANGLES['HIT_DUCK_RED_RECT'].get('width'),
+                            RECTANGLES['HIT_DUCK_RED_RECT'].get('height'))
+
+HIT_RECT = adjrect(RECTANGLES['HIT_RECT'].get('x_val'),
+                   RECTANGLES['HIT_RECT'].get('y_val'),
+                   RECTANGLES['HIT_RECT'].get('width'),
+                   RECTANGLES['HIT_RECT'].get('height'))
+
+SCORE_RECT = adjrect(RECTANGLES['SCORE_RECT'].get('x_val'),
+                     RECTANGLES['SCORE_RECT'].get('y_val'),
+                     RECTANGLES['SCORE_RECT'].get('width'),
+                     RECTANGLES['SCORE_RECT'].get('height'))
+
+SHOT_RECT = adjrect(RECTANGLES['SHOT_RECT'].get('x_val'),
+                    RECTANGLES['SHOT_RECT'].get('y_val'),
+                    RECTANGLES['SHOT_RECT'].get('width'),
+                    RECTANGLES['SHOT_RECT'].get('height'))
+
+BULLET_RECT = adjrect(RECTANGLES['BULLET_RECT'].get('x_val'),
+                      RECTANGLES['BULLET_RECT'].get('y_val'),
+                      RECTANGLES['BULLET_RECT'].get('width'),
+                      RECTANGLES['BULLET_RECT'].get('height'))
+
+NOTICE_RECT = adjrect(RECTANGLES['NOTICE_RECT'].get('x_val'),
+                      RECTANGLES['NOTICE_RECT'].get('y_val'),
+                      RECTANGLES['NOTICE_RECT'].get('width'),
+                      RECTANGLES['NOTICE_RECT'].get('height'))
+
+
 FONT = os.path.join('media', 'arcadeclassic.ttf')
-FONT_STARTING_POSITION = adjpos (730, 442)
-FONT_GREEN = 154, 233, 0
-FONT_BLACK = 0, 0, 0
-FONT_WHITE = 255, 255, 255
-ROUND_POSITION = adjpos (60, 410)
-SHOT_BG_POSITION = adjpos (60, 440)
-SHOT_POSITION = adjpos (60, 440)
-SHOT_RECT = adjrect (0, 43, 70, 43)
-BULLET_RECT = adjrect (200, 59, 13, 17)
-NOTICE_POSITION = adjpos (370, 120)
-NOTICE_RECT = adjrect (0, 86, 128, 63)
-NOTICE_WIDTH = adjwidth (128)
-NOTICE_LINE_1_HEIGHT = adjheight (128)
-NOTICE_LINE_2_HEIGHT = adjwidth (150)
+
+FONT_GREEN = (COLORS['FONT_GREEN'].get('R'),
+              COLORS['FONT_GREEN'].get('G'),
+              COLORS['FONT_GREEN'].get('B'))
+
+FONT_BLACK = (COLORS['FONT_BLACK'].get('R'),
+              COLORS['FONT_BLACK'].get('G'),
+              COLORS['FONT_BLACK'].get('B'))
+
+FONT_WHITE = (COLORS['FONT_WHITE'].get('R'),
+              COLORS['FONT_WHITE'].get('G'),
+              COLORS['FONT_WHITE'].get('B'))
+
+NOTICE_WIDTH = adjwidth(128)
+NOTICE_LINE_1_HEIGHT = adjheight(128)
+NOTICE_LINE_2_HEIGHT = adjwidth(150)
 
 registry = None
+
 
 class BaseState(object):
     def __init__(self):
@@ -46,48 +131,48 @@ class BaseState(object):
         self.hitDucks = [False for i in range(10)]
         self.hitDuckIndex = 0
 
-    def renderNotices(self):
+    def render_notices(self):
         if len(self.notices) is 0:
             return
         elif len(self.notices) is 1:
             self.notices.add("")
 
         surface = self.registry.get('surface')
-        controlImgs = self.registry.get('controlImgs')
+        control_images = self.registry.get('control_images')
         font = pygame.font.Font(FONT, adjheight (20))
         line1 = font.render(str(self.notices[0]), True, (255, 255, 255))
         line2 = font.render(str(self.notices[1]), True, (255, 255, 255))
         x, y = NOTICE_POSITION
         x1 = x + (NOTICE_WIDTH - line1.get_width()) / 2
         x2 = x + (NOTICE_WIDTH - line2.get_width()) / 2
-        surface.blit(controlImgs, NOTICE_POSITION, NOTICE_RECT)
+        surface.blit(control_images, NOTICE_POSITION, NOTICE_RECT)
         surface.blit(line1, (x1, NOTICE_LINE_1_HEIGHT))
         surface.blit(line2, (x2, NOTICE_LINE_2_HEIGHT))
 
     def renderControls(self):
-        img = self.registry.get('controlImgs')
+        img = self.registry.get('control_images')
         surface = self.registry.get('surface')
         round = self.registry.get('round')
-        controlImgs = self.registry.get('controlImgs')
+        control_images = self.registry.get('control_images')
 
         # Show round number
         font = pygame.font.Font(FONT, adjheight (20))
-        text = font.render(("R= %d" % round), True, FONT_GREEN, FONT_BLACK);
-        surface.blit(text, ROUND_POSITION);
+        text = font.render(("R= %d" % round), True, FONT_GREEN, FONT_BLACK)
+        surface.blit(text, ROUND_POSITION)
 
         # Show the bullets
         startingX, startingY = SHOT_POSITION
-        surface.blit(controlImgs, SHOT_POSITION, SHOT_RECT)
+        surface.blit(control_images, SHOT_POSITION, SHOT_RECT)
         for i in range(self.gun.rounds):
-            x = startingX + adjwidth (10) + adjwidth (i * 18)
-            y = startingY + adjheight (5)
-            surface.blit(controlImgs, (x, y), BULLET_RECT)
+            x = startingX + adjwidth(10) + adjwidth(i * 18)
+            y = startingY + adjheight(5)
+            surface.blit(control_images, (x, y), BULLET_RECT)
 
         # Show the hit counter
-        surface.blit(controlImgs, HIT_POSITION, HIT_RECT)
+        surface.blit(control_images, HIT_POSITION, HIT_RECT)
         startingX, startingY = HIT_DUCK_POSITION
         for i in range(10):
-            x = startingX + adjwidth (i * 18)
+            x = startingX + adjwidth(i * 18)
             y = startingY
             if self.hitDucks[i]:
                 surface.blit(img, (x, y), HIT_DUCK_RED_RECT)
@@ -96,19 +181,22 @@ class BaseState(object):
 
         # Show the score
         surface.blit(img, SCORE_POSITION, SCORE_RECT)
-        font = pygame.font.Font(FONT, adjheight (20))
-        text = font.render(str(self.registry.get('score')), True, FONT_WHITE);
+        font = pygame.font.Font(FONT, adjheight(20))
+        text = font.render(str(self.registry.get('score')), True, FONT_WHITE)
         x, y = FONT_STARTING_POSITION
-        x -= text.get_width();
-        surface.blit(text, (x,y));
+        x -= text.get_width()
+        surface.blit(text, (x, y))
+
 
 class StartState(BaseState):
     def __init__(self, reg):
         global registry
         registry = reg
 
-    def start(self):
+    @staticmethod
+    def start():
         return RoundStartState()
+
 
 class RoundStartState(BaseState):
     def __init__(self):
@@ -142,7 +230,7 @@ class RoundStartState(BaseState):
         width, height = DOG_FRAME
 
         # Always have round + controls
-        self.renderNotices()
+        self.render_notices()
         self.renderControls()
 
         # Update animation frame
@@ -167,18 +255,19 @@ class RoundStartState(BaseState):
                 self.barkCount += 1
 
             # First Jump frame
-            if (animationFrame == 1):
+            if animationFrame == 1:
                 self.dogPosition = (x + adjwidth (5)), (y - adjheight (10))
 
             # Second jump frame
-            elif (animationFrame == 2):
+            elif animationFrame == 2:
                 self.dogPosition = (x + adjwidth (5)), (y + adjheight (5))
 
-            elif (animationFrame > 2):
+            elif animationFrame > 2:
                 return # Animation is over
 
         # Add the dog
         surface.blit(sprites, self.dogPosition, rect)
+
 
 class PlayState(BaseState):
     def __init__(self):
@@ -192,7 +281,7 @@ class PlayState(BaseState):
 
     def execute(self, event):
         if event.type == pygame.MOUSEMOTION:
-            self.gun.moveCrossHairs(event.pos)
+            self.gun.move_cross_hairs(event.pos)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             hasFired = self.gun.shoot()
             for duck in self.ducks:
@@ -290,7 +379,7 @@ class PlayState(BaseState):
                 self.dogCanComeOut = False
                 self.ducks = [Duck(self.registry), Duck(self.registry)]
                 self.timer = timer
-                self.gun.reloadIt()
+                self.gun.reload_it()
             else:
                 surface.blit(sprites, self.dogPosition, (x2, y2, width, height))
 
@@ -331,7 +420,7 @@ class RoundEndState(BaseState):
             return RoundStartState()
 
     def render(self):
-        self.renderNotices()
+        self.render_notices()
         self.renderControls()
 
 class GameOverState(BaseState):
@@ -352,5 +441,5 @@ class GameOverState(BaseState):
             return self.state
 
     def render(self):
-        self.renderNotices()
+        self.render_notices()
         self.renderControls()

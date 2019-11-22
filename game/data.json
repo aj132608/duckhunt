@@ -1,0 +1,135 @@
+{
+  "game_specs": {
+    "positions": {
+      "DOG_POSITION": {
+        "x_val": 250,
+        "y_val": 350
+      },
+      "DOG_FRAME": {
+        "x_val": 122,
+        "y_val": 110
+      },
+      "DOG_REPORT_POSITION": {
+        "x_val": 450,
+        "y_val": 325
+      },
+      "HIT_POSITION": {
+        "x_val": 245,
+        "y_val": 440
+      },
+      "HIT_DUCK_POSITION": {
+        "x_val": 329,
+        "y_val": 445
+      },
+      "SCORE_POSITION": {
+        "x_val": 620,
+        "y_val": 440
+      },
+      "FONT_STARTING_POSITION": {
+        "x_val": 730,
+        "y_val": 442
+      },
+       "ROUND_POSITION": {
+        "x_val": 60,
+        "y_val": 410
+      },
+      "SHOT_BG_POSITION": {
+        "x_val": 60,
+        "y_val": 440
+      },
+      "SHOT_POSITION": {
+        "x_val": 60,
+        "y_val": 440
+      },
+      "NOTICE_POSITION": {
+        "x_val": 370,
+        "y_val": 120,
+        "width": 128
+      }
+    },
+    "rectangles": {
+      "DOG_LAUGH_RECT": {
+        "x_val": 385,
+        "y_val": 120,
+        "width": 80,
+        "height": 85
+      },
+      "DOG_ONE_DUCK_RECT": {
+        "x_val": 650,
+        "y_val": 0,
+        "width": 100,
+        "height": 100
+      },
+      "DOG_TWO_DUCKS_RECT": {
+        "x_val": 630,
+        "y_val": 115,
+        "width": 120,
+        "height": 100
+      },
+      "HIT_RECT": {
+        "x_val": 0,
+        "y_val": 0,
+        "width": 287,
+        "height": 43
+      },
+      "HIT_DUCK_WHITE_RECT": {
+        "x_val": 218,
+        "y_val": 44,
+        "width": 18,
+        "height": 15
+      },
+      "HIT_DUCK_RED_RECT": {
+        "x_val": 200,
+        "y_val": 44,
+        "width": 18,
+        "height": 15
+      },
+      "SCORE_RECT": {
+        "x_val": 69,
+        "y_val": 43,
+        "width": 130,
+        "height": 43
+      },
+      "SHOT_RECT": {
+        "x_val": 0,
+        "y_val": 43,
+        "width": 70,
+        "height": 43
+      },
+      "BULLET_RECT": {
+        "x_val": 200,
+        "y_val": 59,
+        "width": 13,
+        "height": 17
+      },
+      "NOTICE_RECT": {
+        "x_val": 0,
+        "y_val": 86,
+        "width": 128,
+        "height": 63
+      }
+    },
+    "colors": {
+      "FONT_GREEN": {
+        "R": 154,
+        "G": 233,
+        "B": 0
+      },
+      "FONT_BLACK": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+      },
+      "FONT_WHITE": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+      }
+    },
+    "screen_dimensions": {
+      "width": 800,
+      "height": 500
+    },
+    "title": "Symons Media: Duck Hunt"
+  }
+}
