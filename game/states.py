@@ -48,6 +48,9 @@ SHOT_POSITION = adjpos(POSITIONS['SHOT_POSITION'].get('x_val'),
 NOTICE_POSITION = adjpos(POSITIONS['NOTICE_POSITION'].get('x_val'),
                          POSITIONS['NOTICE_POSITION'].get('y_val'))
 
+BUTTON_POSITION = adjpos(POSITIONS['BUTTON_POSITION'].get('x_val'),
+                         POSITIONS['BUTTON_POSITION'].get('y_val'))
+
 # Load the Rectangles in from data.json
 DOG_LAUGH_RECT = adjrect(RECTANGLES['DOG_LAUGH_RECT'].get('x_val'),
                          RECTANGLES['DOG_LAUGH_RECT'].get('y_val'),
@@ -99,6 +102,10 @@ NOTICE_RECT = adjrect(RECTANGLES['NOTICE_RECT'].get('x_val'),
                       RECTANGLES['NOTICE_RECT'].get('width'),
                       RECTANGLES['NOTICE_RECT'].get('height'))
 
+BUTTON_RECT = adjrect(RECTANGLES['BUTTON_RECT'].get('x_val'),
+                      RECTANGLES['BUTTON_RECT'].get('y_val'),
+                      RECTANGLES['BUTTON_RECT'].get('width'),
+                      RECTANGLES['BUTTON_RECT'].get('height'))
 
 FONT = os.path.join('media', 'arcadeclassic.ttf')
 
@@ -122,6 +129,7 @@ registry = None
 
 
 class BaseState(object):
+
     def __init__(self):
         global registry
         self.registry = registry
@@ -130,6 +138,14 @@ class BaseState(object):
         self.gun = Gun(self.registry)
         self.hitDucks = [False for i in range(10)]
         self.hitDuckIndex = 0
+        self.mouse_text_position = (POSITIONS['MOUSE_SELECTED_POSITION'].get('x_val'),
+                                    POSITIONS['MOUSE_SELECTED_POSITION'].get('y_val'))
+        self.tracking_text_position = (POSITIONS['TRACKING_SELECTED_POSITION'].get('x_val'),
+                                       POSITIONS['TRACKING_SELECTED_POSITION'].get('y_val'))
+
+        self.selection_position = self.mouse_text_position
+
+        self.selection = 'MOUSE'
 
     def render_notices(self):
         if len(self.notices) is 0:
@@ -146,6 +162,7 @@ class BaseState(object):
         x1 = x + (NOTICE_WIDTH - line1.get_width()) / 2
         x2 = x + (NOTICE_WIDTH - line2.get_width()) / 2
         surface.blit(control_images, NOTICE_POSITION, NOTICE_RECT)
+
         surface.blit(line1, (x1, NOTICE_LINE_1_HEIGHT))
         surface.blit(line2, (x2, NOTICE_LINE_2_HEIGHT))
 
@@ -154,6 +171,7 @@ class BaseState(object):
         surface = self.registry.get('surface')
         round = self.registry.get('round')
         control_images = self.registry.get('control_images')
+        font = pygame.font.Font(FONT, adjheight (20))
 
         # Show round number
         font = pygame.font.Font(FONT, adjheight (20))
@@ -167,6 +185,13 @@ class BaseState(object):
             x = startingX + adjwidth(10) + adjwidth(i * 18)
             y = startingY + adjheight(5)
             surface.blit(control_images, (x, y), BULLET_RECT)
+
+        surface.blit(control_images, BUTTON_POSITION, SCORE_RECT)
+        pygame.draw.rect(surface, FONT_BLACK, BUTTON_RECT)
+
+        controls = font.render(self.selection, True, FONT_GREEN)
+
+        surface.blit(controls, self.selection_position)
 
         # Show the hit counter
         surface.blit(control_images, HIT_POSITION, HIT_RECT)
@@ -186,7 +211,6 @@ class BaseState(object):
         x, y = FONT_STARTING_POSITION
         x -= text.get_width()
         surface.blit(text, (x, y))
-
 
 class StartState(BaseState):
     def __init__(self, reg):
@@ -291,17 +315,29 @@ class PlayState(BaseState):
                     self.hitDucks[self.hitDuckIndex] = True
                     self.hitDuckIndex += 1
                 elif not duck.isDead and self.gun.rounds <= 0:
-                     duck.flyOff = True
-        elif event.type == pygame.KEYDOWN and event.key == 32:
-            hasFired = self.gun.shoot()
-            for duck in self.ducks:
-                # if hasFired and duck.isShot(event.pos):
-                if hasFired and duck.isShot(self.gun.mousePos):
-                    self.registry.set('score', self.registry.get('score') + 10)
-                    self.hitDucks[self.hitDuckIndex] = True
-                    self.hitDuckIndex += 1
-                elif not duck.isDead and self.gun.rounds <= 0:
                     duck.flyOff = True
+        elif event.type == pygame.KEYDOWN:
+            print(event)
+            if event.key == 32:
+                hasFired = self.gun.shoot()
+                for duck in self.ducks:
+                    # if hasFired and duck.isShot(event.pos):
+                    if hasFired and duck.isShot(self.gun.mousePos):
+                        self.registry.set('score', self.registry.get('score') + 10)
+                        self.hitDucks[self.hitDuckIndex] = True
+                        self.hitDuckIndex += 1
+                    elif not duck.isDead and self.gun.rounds <= 0:
+                        duck.flyOff = True
+            elif event.key == 109:
+                # if shift is pressed toggle between MOUSE and EYE TRACKING controls
+                if self.selection == "MOUSE":
+                    print('Eye Tracking Selected!')
+                    self.selection = "EYE TRACKING"
+                    self.selection_position = self.tracking_text_position
+                else:
+                    print('Mouse Selected!')
+                    self.selection = "MOUSE"
+                    self.selection_position = self.mouse_text_position
 
     def update(self):
         timer = int(time.time())
