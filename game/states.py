@@ -285,12 +285,23 @@ class PlayState(BaseState):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             hasFired = self.gun.shoot()
             for duck in self.ducks:
-                if hasFired and duck.isShot(event.pos):
+                # if hasFired and duck.isShot(event.pos):
+                if hasFired and duck.isShot(self.gun.mousePos):
                     self.registry.set('score', self.registry.get('score') + 10)
                     self.hitDucks[self.hitDuckIndex] = True
                     self.hitDuckIndex += 1
                 elif not duck.isDead and self.gun.rounds <= 0:
                      duck.flyOff = True
+        elif event.type == pygame.KEYDOWN and event.key == 32:
+            hasFired = self.gun.shoot()
+            for duck in self.ducks:
+                # if hasFired and duck.isShot(event.pos):
+                if hasFired and duck.isShot(self.gun.mousePos):
+                    self.registry.set('score', self.registry.get('score') + 10)
+                    self.hitDucks[self.hitDuckIndex] = True
+                    self.hitDuckIndex += 1
+                elif not duck.isDead and self.gun.rounds <= 0:
+                    duck.flyOff = True
 
     def update(self):
         timer = int(time.time())

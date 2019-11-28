@@ -11,6 +11,7 @@ with open('./game/data.json') as json_file:
 
 GAME_SPECS = data['game_specs']
 COLORS = GAME_SPECS['colors']
+RECTANGLES = GAME_SPECS['rectangles']
 
 # Game parameters
 SCREEN_WIDTH, SCREEN_HEIGHT = adjpos(GAME_SPECS['screen_dimensions'].get('width'),
@@ -38,6 +39,16 @@ class Game(object):
         self.size = SCREEN_WIDTH, SCREEN_HEIGHT
         background = os.path.join('media', 'background.jpg')
         bg = pygame.image.load(background)
+        mouse_button_path = os.path.join('media', 'mouse_pressed.png')
+        mouse_button = pygame.image.load(mouse_button_path)
+        self.mouse_selected_button = pygame.transform.smoothscale(mouse_button, (RECTANGLES['BUTTON_RECT'].get('width'),
+                                                                                 RECTANGLES['BUTTON_RECT'].get('height')
+                                                                                 ))
+        tracking_button_path = os.path.join('media', 'eye_tracking_pressed.png')
+        tracking_button = pygame.image.load(tracking_button_path)
+        self.tracking_selected_button = pygame.transform.smoothscale(tracking_button,
+                                                                     (RECTANGLES['BUTTON_RECT'].get('width'),
+                                                                      RECTANGLES['BUTTON_RECT'].get('height')))
         self.background = pygame.transform.smoothscale(bg, self.size)
         self.driver = None
 

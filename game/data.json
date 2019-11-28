@@ -107,6 +107,12 @@
         "y_val": 86,
         "width": 128,
         "height": 63
+      },
+      "BUTTON_RECT": {
+        "x_val": 69,
+        "y_val": 100,
+        "width": 130,
+        "height": 43
       }
     },
     "colors": {
