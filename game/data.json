@@ -30,16 +30,28 @@
         "y_val": 442
       },
        "ROUND_POSITION": {
-        "x_val": 60,
+        "x_val": 20,
         "y_val": 410
       },
       "SHOT_BG_POSITION": {
-        "x_val": 60,
+        "x_val": 20,
         "y_val": 440
       },
       "SHOT_POSITION": {
-        "x_val": 60,
+        "x_val": 20,
         "y_val": 440
+      },
+      "BUTTON_POSITION": {
+        "x_val": 105,
+        "y_val": 440
+      },
+      "MOUSE_SELECTED_POSITION": {
+        "x_val": 145,
+        "y_val": 450
+      },
+      "TRACKING_SELECTED_POSITION": {
+        "x_val": 108,
+        "y_val": 450
       },
       "NOTICE_POSITION": {
         "x_val": 370,
@@ -109,10 +121,10 @@
         "height": 63
       },
       "BUTTON_RECT": {
-        "x_val": 69,
-        "y_val": 100,
-        "width": 130,
-        "height": 43
+        "x_val": 110,
+        "y_val": 447,
+        "width": 110,
+        "height": 35
       }
     },
     "colors": {
