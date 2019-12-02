@@ -1,4 +1,6 @@
-ORIG_W, ORIG_H = (800, 500)
+from win32api import GetSystemMetrics
+
+ORIG_W, ORIG_H = (GetSystemMetrics(0), GetSystemMetrics(1))
 RENDER_W, RENDER_H = ORIG_W, ORIG_H
 
 
