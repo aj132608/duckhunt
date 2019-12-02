@@ -3,55 +3,55 @@
     "positions": {
       "DOG_POSITION": {
         "x_val": 250,
-        "y_val": 350
+        "y_val": 714
       },
       "DOG_FRAME": {
         "x_val": 122,
-        "y_val": 110
+        "y_val": 390
       },
       "DOG_REPORT_POSITION": {
         "x_val": 450,
-        "y_val": 325
+        "y_val": 689
       },
       "HIT_POSITION": {
-        "x_val": 245,
-        "y_val": 440
+        "x_val": 613,
+        "y_val": 804
       },
       "HIT_DUCK_POSITION": {
-        "x_val": 329,
-        "y_val": 445
+        "x_val": 697,
+        "y_val": 809
       },
       "SCORE_POSITION": {
-        "x_val": 620,
-        "y_val": 440
+        "x_val": 1356,
+        "y_val": 804
       },
       "FONT_STARTING_POSITION": {
-        "x_val": 730,
-        "y_val": 442
+        "x_val": 1466,
+        "y_val": 806
       },
        "ROUND_POSITION": {
         "x_val": 20,
-        "y_val": 410
+        "y_val": 774
       },
       "SHOT_BG_POSITION": {
         "x_val": 20,
-        "y_val": 440
+        "y_val": 804
       },
       "SHOT_POSITION": {
         "x_val": 20,
-        "y_val": 440
+        "y_val": 804
       },
       "BUTTON_POSITION": {
         "x_val": 105,
-        "y_val": 440
+        "y_val": 804
       },
       "MOUSE_SELECTED_POSITION": {
         "x_val": 145,
-        "y_val": 450
+        "y_val": 814
       },
       "TRACKING_SELECTED_POSITION": {
         "x_val": 108,
-        "y_val": 450
+        "y_val": 814
       },
       "NOTICE_POSITION": {
         "x_val": 370,
@@ -122,7 +122,7 @@
       },
       "BUTTON_RECT": {
         "x_val": 110,
-        "y_val": 447,
+        "y_val": 810,
         "width": 110,
         "height": 35
       }

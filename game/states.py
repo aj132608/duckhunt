@@ -6,7 +6,7 @@ from game.registry import adjpos, adjrect, adjwidth, adjheight
 from game.gun import Gun
 from game.duck import Duck
 
-with open('./game/data.json') as json_file:
+with open('./game/config.json') as json_file:
     data = json.load(json_file)
 
 GAME_SPECS = data['game_specs']
@@ -171,10 +171,9 @@ class BaseState(object):
         surface = self.registry.get('surface')
         round = self.registry.get('round')
         control_images = self.registry.get('control_images')
-        font = pygame.font.Font(FONT, adjheight (20))
 
         # Show round number
-        font = pygame.font.Font(FONT, adjheight (20))
+        font = pygame.font.Font(FONT, adjheight(20))
         text = font.render(("R= %d" % round), True, FONT_GREEN, FONT_BLACK)
         surface.blit(text, ROUND_POSITION)
 
@@ -186,11 +185,13 @@ class BaseState(object):
             y = startingY + adjheight(5)
             surface.blit(control_images, (x, y), BULLET_RECT)
 
+        # display the rectangle with green rounded edges.
         surface.blit(control_images, BUTTON_POSITION, SCORE_RECT)
+
+        # cover up the SCORE with a black rectangle
         pygame.draw.rect(surface, FONT_BLACK, BUTTON_RECT)
 
         controls = font.render(self.selection, True, FONT_GREEN)
-
         surface.blit(controls, self.selection_position)
 
         # Show the hit counter
@@ -317,7 +318,6 @@ class PlayState(BaseState):
                 elif not duck.isDead and self.gun.rounds <= 0:
                     duck.flyOff = True
         elif event.type == pygame.KEYDOWN:
-            print(event)
             if event.key == 32:
                 hasFired = self.gun.shoot()
                 for duck in self.ducks:
