@@ -6,7 +6,7 @@ import numpy as np
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = tensorflow.keras.models.load_model('keras_model.h5')
+model = tensorflow.keras.models.load_model('keras_model.h5', compile=False)
 
 # Create the array of the right shape to feed into the keras model
 # The 'length' or number of images you can put into the array is
@@ -15,6 +15,9 @@ data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
 # Replace this with the path to your image
 image = Image.open('download.png')
+
+# Convert the image from rgba to RGB
+image = image.convert('RGB')
 
 # Make sure to resize all images to 224, 224 otherwise they won't fit in the array
 image = image.resize((224, 224))
