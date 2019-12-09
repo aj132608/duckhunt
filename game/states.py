@@ -127,7 +127,6 @@ NOTICE_LINE_2_HEIGHT = adjwidth(430)
 
 registry = None
 
-
 class BaseState(object):
 
     def __init__(self):
@@ -306,38 +305,26 @@ class PlayState(BaseState):
         self.button_pressed = False
         self.current_button_key = 0
 
-    def execute(self, event):
-        print(self.gun.mousePos)
 
+    def execute(self, event):
+        # print(self.gun.mousePos)
         if self.selection == "WEBCAM":
             if self.button_pressed:
                 if self.current_button_key == 97:
                     x, y = self.gun.mousePos
-                    # print(f"Original position: ({self.gun.mousePos})")
-                    self.gun.mousePos = (x - 10, y)
-                    # print(f"New position: ({self.gun.mousePos})")
-                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    self.gun.mousePos = adjpos(x - 10, y)
                     print("left!")
                 elif self.current_button_key == 115:
                     x, y = self.gun.mousePos
-                    # print(f"Original position: ({self.gun.mousePos})")
-                    self.gun.mousePos = (x, y + 10)
-                    # print(f"New position: ({self.gun.mousePos})")
-                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    self.gun.mousePos = adjpos(x, y + 10)
                     print("down!")
                 elif self.current_button_key == 100:
                     x, y = self.gun.mousePos
-                    # print(f"Original position: ({self.gun.mousePos})")
-                    self.gun.mousePos = (x + 10, y)
-                    # print(f"New position: ({self.gun.mousePos})")
-                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    self.gun.mousePos = adjpos(x + 10, y)
                     print("right!")
                 elif self.current_button_key == 119:
                     x, y = self.gun.mousePos
-                    # print(f"Original position: ({self.gun.mousePos})")
-                    self.gun.mousePos = (x, y - 10)
-                    # print(f"New position: ({self.gun.mousePos})")
-                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    self.gun.mousePos = adjpos(x, y - 10)
                     print("up!")
                 if event.type == pygame.KEYUP:
                     print("Key has been released")
@@ -382,7 +369,6 @@ class PlayState(BaseState):
 
         elif self.selection == "MOUSE":
             if event.type == pygame.MOUSEMOTION:
-                print(event.pos)
                 self.gun.move_cross_hairs(event.pos)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 hasFired = self.gun.shoot()
@@ -398,7 +384,7 @@ class PlayState(BaseState):
                 if event.key == 109:
                     print('WEBCAM Selected!')
                     self.selection = "WEBCAM"
-                    self.selection_position = self.tracking_text_position
+                    self.selection_position = self.mouse_text_position
 
     def update(self):
         timer = int(time.time())
