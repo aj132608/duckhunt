@@ -2,13 +2,14 @@ import os
 import pygame
 
 
-class Gun(object):
+class Cam(object):
     def __init__(self, registry):
         self.registry = registry
         self.rounds = 3
         # Starting position
         self.mousePos = (0, 0)
-        self.mouseImg = pygame.image.load(os.path.join('media', 'crosshairs.png'))
+        self.mouseImg = pygame.image.load(
+            os.path.join('media', 'crosshairs.png'))
 
     def render(self):
         surface = self.registry.get('surface')
