@@ -329,10 +329,10 @@ class PlayState(BaseState):
                     elif not duck.isDead and self.gun.rounds <= 0:
                         duck.flyOff = True
             elif event.key == 109:
-                # if shift is pressed toggle between MOUSE and EYE TRACKING controls
+                # if M is pressed toggle between MOUSE and WEBCAM controls
                 if self.selection == "MOUSE":
-                    print('Eye Tracking Selected!')
-                    self.selection = "EYE TRACKING"
+                    print('WEBCAM Selected!')
+                    self.selection = "WEBCAM"
                     self.selection_position = self.tracking_text_position
                 else:
                     print('Mouse Selected!')
