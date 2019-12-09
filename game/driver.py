@@ -12,11 +12,11 @@ class Driver(object):
         self.registry.set('surface', surface)
         self.registry.set('soundHandler', SoundHandler())
 
-        controls = pygame.image.load(os.path.join ('media', 'controls.png'))
-        self.registry.set('control_images', pygame.transform.smoothscale (controls, adjpos(*controls.get_size())))
+        controls = pygame.image.load(os.path.join('media', 'controls.png'))
+        self.registry.set('control_images', pygame.transform.smoothscale(controls, adjpos(*controls.get_size())))
 
-        sprites = pygame.image.load(os.path.join ('media', 'sprites.png'))
-        sprites = pygame.transform.scale (sprites, adjpos(*sprites.get_size()))
+        sprites = pygame.image.load(os.path.join('media', 'sprites.png'))
+        sprites = pygame.transform.scale(sprites, adjpos(*sprites.get_size()))
         self.registry.set('sprites', sprites)
         
         rsprites = pygame.transform.flip(sprites, True, False)

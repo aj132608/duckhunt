@@ -122,8 +122,8 @@ FONT_WHITE = (COLORS['FONT_WHITE'].get('R'),
               COLORS['FONT_WHITE'].get('B'))
 
 NOTICE_WIDTH = adjwidth(128)
-NOTICE_LINE_1_HEIGHT = adjheight(128)
-NOTICE_LINE_2_HEIGHT = adjwidth(150)
+NOTICE_LINE_1_HEIGHT = adjheight(408)
+NOTICE_LINE_2_HEIGHT = adjwidth(430)
 
 registry = None
 
@@ -155,12 +155,13 @@ class BaseState(object):
 
         surface = self.registry.get('surface')
         control_images = self.registry.get('control_images')
-        font = pygame.font.Font(FONT, adjheight (20))
+        font = pygame.font.Font(FONT, adjheight(20))
         line1 = font.render(str(self.notices[0]), True, (255, 255, 255))
         line2 = font.render(str(self.notices[1]), True, (255, 255, 255))
         x, y = NOTICE_POSITION
         x1 = x + (NOTICE_WIDTH - line1.get_width()) / 2
         x2 = x + (NOTICE_WIDTH - line2.get_width()) / 2
+        print(NOTICE_POSITION)
         surface.blit(control_images, NOTICE_POSITION, NOTICE_RECT)
 
         surface.blit(line1, (x1, NOTICE_LINE_1_HEIGHT))
