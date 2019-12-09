@@ -161,7 +161,6 @@ class BaseState(object):
         x, y = NOTICE_POSITION
         x1 = x + (NOTICE_WIDTH - line1.get_width()) / 2
         x2 = x + (NOTICE_WIDTH - line2.get_width()) / 2
-        print(NOTICE_POSITION)
         surface.blit(control_images, NOTICE_POSITION, NOTICE_RECT)
 
         surface.blit(line1, (x1, NOTICE_LINE_1_HEIGHT))
@@ -304,22 +303,88 @@ class PlayState(BaseState):
         self.dogCanComeOut = False
         self.dogPosition = DOG_REPORT_POSITION
         self.dogdy = 5
+        self.button_pressed = False
+        self.current_button_key = 0
 
     def execute(self, event):
-        if event.type == pygame.MOUSEMOTION:
-            self.gun.move_cross_hairs(event.pos)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            hasFired = self.gun.shoot()
-            for duck in self.ducks:
-                # if hasFired and duck.isShot(event.pos):
-                if hasFired and duck.isShot(self.gun.mousePos):
-                    self.registry.set('score', self.registry.get('score') + 10)
-                    self.hitDucks[self.hitDuckIndex] = True
-                    self.hitDuckIndex += 1
-                elif not duck.isDead and self.gun.rounds <= 0:
-                    duck.flyOff = True
-        elif event.type == pygame.KEYDOWN:
-            if event.key == 32:
+        print(self.gun.mousePos)
+
+        if self.selection == "WEBCAM":
+            if self.button_pressed:
+                if self.current_button_key == 97:
+                    x, y = self.gun.mousePos
+                    # print(f"Original position: ({self.gun.mousePos})")
+                    self.gun.mousePos = (x - 10, y)
+                    # print(f"New position: ({self.gun.mousePos})")
+                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    print("left!")
+                elif self.current_button_key == 115:
+                    x, y = self.gun.mousePos
+                    # print(f"Original position: ({self.gun.mousePos})")
+                    self.gun.mousePos = (x, y + 10)
+                    # print(f"New position: ({self.gun.mousePos})")
+                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    print("down!")
+                elif self.current_button_key == 100:
+                    x, y = self.gun.mousePos
+                    # print(f"Original position: ({self.gun.mousePos})")
+                    self.gun.mousePos = (x + 10, y)
+                    # print(f"New position: ({self.gun.mousePos})")
+                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    print("right!")
+                elif self.current_button_key == 119:
+                    x, y = self.gun.mousePos
+                    # print(f"Original position: ({self.gun.mousePos})")
+                    self.gun.mousePos = (x, y - 10)
+                    # print(f"New position: ({self.gun.mousePos})")
+                    # self.gun.move_cross_hairs(self.gun.mousePos)
+                    print("up!")
+                if event.type == pygame.KEYUP:
+                    print("Key has been released")
+                    self.button_pressed = False
+                    self.current_button_key = 0
+            # if event.type == pygame.KEYDOWN and event.key ==:
+            #     self.gun.move_cross_hairs(event.pos)
+            if event.type == pygame.KEYDOWN:
+                print("Button Not Pressed Keydown")
+                if event.key == 97:
+                    # right
+                    self.button_pressed = True
+                    self.current_button_key = 97
+                    print("right!")
+                if event.key == 115:
+                    self.button_pressed = True
+                    self.current_button_key = 115
+                    print("down!")
+                if event.key == 100:
+                    self.button_pressed = True
+                    self.current_button_key = 100
+                    print("right!")
+                if event.key == 119:
+                    self.button_pressed = True
+                    self.current_button_key = 119
+                    print("up!")
+                if event.key == 32:
+                    hasFired = self.gun.shoot()
+                    for duck in self.ducks:
+                        # if hasFired and duck.isShot(event.pos):
+                        if hasFired and duck.isShot(self.gun.mousePos):
+                            self.registry.set('score', self.registry.get('score') + 10)
+                            self.hitDucks[self.hitDuckIndex] = True
+                            self.hitDuckIndex += 1
+                        elif not duck.isDead and self.gun.rounds <= 0:
+                            duck.flyOff = True
+                # toggle between modes
+                if event.key == 109:
+                    print('Mouse Selected!')
+                    self.selection = "MOUSE"
+                    self.selection_position = self.mouse_text_position
+
+        elif self.selection == "MOUSE":
+            if event.type == pygame.MOUSEMOTION:
+                print(event.pos)
+                self.gun.move_cross_hairs(event.pos)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 hasFired = self.gun.shoot()
                 for duck in self.ducks:
                     # if hasFired and duck.isShot(event.pos):
@@ -329,16 +394,11 @@ class PlayState(BaseState):
                         self.hitDuckIndex += 1
                     elif not duck.isDead and self.gun.rounds <= 0:
                         duck.flyOff = True
-            elif event.key == 109:
-                # if M is pressed toggle between MOUSE and WEBCAM controls
-                if self.selection == "MOUSE":
+            elif event.type == pygame.KEYDOWN:
+                if event.key == 109:
                     print('WEBCAM Selected!')
                     self.selection = "WEBCAM"
                     self.selection_position = self.tracking_text_position
-                else:
-                    print('Mouse Selected!')
-                    self.selection = "MOUSE"
-                    self.selection_position = self.mouse_text_position
 
     def update(self):
         timer = int(time.time())
